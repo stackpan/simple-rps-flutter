@@ -2,6 +2,9 @@
 
 Simple rock paper scissor game written in Flutter
 
+## Demo
+![](https://https://github.com/stackpan/simple-rps-flutter/blob/main/sample_demo.gif)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
