@@ -49,7 +49,9 @@ class _GameViewState extends State<GameView> {
     int aiValue = GameObject.values.indexOf(_ai.selection!);
 
     if (playerValue == aiValue) return 2;
-    if (playerValue == 0 && aiValue == 2 || playerValue > aiValue) return 1;
+    if (playerValue == 2 && aiValue == 1 ||
+        playerValue == 1 && aiValue == 0 ||
+        playerValue == 0 && aiValue == 2) return 1;
     return 0;
   }
 
@@ -73,7 +75,7 @@ class _GameViewState extends State<GameView> {
           buttonIndex == GameObject.values.indexOf(aiSelection!)) {
         return Colors.purple;
       }
-      if (buttonIndex == GameObject.values.indexOf(playerSelection!)) {
+      if (buttonIndex == GameObject.values.indexOf(playerSelection)) {
         return Colors.green;
       }
       if (buttonIndex == GameObject.values.indexOf(aiSelection!)) {
@@ -114,45 +116,26 @@ class _GameViewState extends State<GameView> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _rollGame(GameObject.rock);
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                              _getSelectionButtonColor(0))),
-                      child:
-                          const Text('ROCK', style: TextStyle(fontSize: 18.0)),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _rollGame(GameObject.paper);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                _getSelectionButtonColor(1))),
-                        child: const Text('PAPER',
-                            style: TextStyle(fontSize: 18.0))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _rollGame(GameObject.scissor);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                _getSelectionButtonColor(2))),
-                        child: const Text('SCISSOR',
-                            style: TextStyle(fontSize: 18.0))),
-                  ),
-                ],
+                children: List.generate(
+                    3,
+                    (index) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _rollGame(GameObject.values[index]);
+                            },
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    _getSelectionButtonColor(index))),
+                            child: Text(
+                                GameObject.values[index]
+                                    .toString()
+                                    .split('.')
+                                    .last
+                                    .toUpperCase(),
+                                style: const TextStyle(fontSize: 18.0)),
+                          ),
+                        )),
               ),
             ],
           )
